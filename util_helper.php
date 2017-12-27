@@ -23,7 +23,7 @@ function listitem($type,$s_rows)
     return $s_rows;
 }
 
-function makedir($path, $is_recursive=false)
+function makedir($path, $is_recursive=FALSE)
 {
     if(!is_dir($path)){
         @mkdir($path, 0755, $is_recursive);
@@ -376,11 +376,11 @@ if ( ! function_exists('equal2print'))
     {
         $base_str = (string)$base_value;
         $compare = (gettype($compare_value) === 'array') ? $compare_value : (string)$compare_value;
-        $is_equal = false;
+        $is_equal = FALSE;
 
         if ((gettype($compare) === 'string') && ($base_str === $compare))
         {
-            $is_equal = true;
+            $is_equal = TRUE;
         }
 
         if (gettype($compare) === 'array')
@@ -389,7 +389,7 @@ if ( ! function_exists('equal2print'))
             {
                 if ($base_str === (string)$com_val)
                 {
-                    $is_equal = true;
+                    $is_equal = TRUE;
                 }
             }
         }
@@ -728,7 +728,7 @@ function file_size($size)
     return $size ? @round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $filesizename[$i] : '0B';
 }
 
-function webhard_file_size($size, $digit = 2, $num = 4, $number_format = true)
+function webhard_file_size($size, $digit = 2, $num = 4, $number_format = TRUE)
 {
     //if(!is_numeric($size)) return FALSE;
     if(!$size) return '0 B';
@@ -785,7 +785,7 @@ function p_r($array="")
     background-color: white;
 "><pre>';
     if(is_array($array))
-        echo htmlspecialchars(print_r($array, true));
+        echo htmlspecialchars(print_r($array, TRUE));
     else
         echo htmlspecialchars($array);
     echo '</pre></div>';
@@ -1299,7 +1299,7 @@ function down_file_name($filename, $zip="")
             $str = "3. {$nclang} // {$filename} // {$tmp_filename} ";
         }else{
             // Edge 예외 처리
-            if (strpos($_SERVER['HTTP_USER_AGENT'], "Edge") == true)
+            if (strpos($_SERVER['HTTP_USER_AGENT'], "Edge") == TRUE)
             {
                 $tmp_filename = iconv("UTF-8", $nclang, $filename);
             }else{
@@ -1308,7 +1308,7 @@ function down_file_name($filename, $zip="")
             $str = "4. {$nclang} // {$filename} // {$tmp_filename} ";
         }
     }
-    if (strpos($_SERVER['HTTP_USER_AGENT'], "Alamofire") == true)
+    if (strpos($_SERVER['HTTP_USER_AGENT'], "Alamofire") == TRUE)
     {
         $tmp_filename = rawurlencode($tmp_filename);
     }
@@ -1683,7 +1683,7 @@ if ( ! function_exists('get_real_IP'))
      */
     function get_real_IP()
     {
-        $ip = null;
+        $ip = NULL;
 
         if (!empty($_SERVER['HTTP_CLIENT_IP'])){ // check ip from share internet
             $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -1707,7 +1707,7 @@ if ( ! function_exists('get_IP'))
     function get_IP()
     {
         $ip = $_SERVER['REMOTE_ADDR'];
-        $ip2 = null;
+        $ip2 = NULL;
         $p_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];   // 방화벽 + 사설 IP
         $r_ip = $_SERVER['HTTP_CLIENT_IP'];         // 방화벽 + 공인 IP
 
@@ -2187,7 +2187,7 @@ function get_gmt_diff()
     $res['server_offset'] = (gmmktime(0, 0, 0, 9, 9, 2016) - mktime(0, 0, 0, 9, 9, 2016)) / 60;
 
     $uid = $CI->session->userdata('sess_cid');
-    if($uid == "" or $uid == "postmaster")
+    if($uid == "" OR $uid == "postmaster")
     {
         // local timezone 사용
 
@@ -2224,9 +2224,9 @@ function get_gmt_diff()
  * @param   int $unix_timestamp 변환하려는 timestamp 값; 생략하면 현재 시각의 timestamp를 사용함
  * @return  datetime
  */
-function time2date($date_format, $unix_timestamp = false)
+function time2date($date_format, $unix_timestamp = FALSE)
 {
-    if ($unix_timestamp === false)
+    if ($unix_timestamp === FALSE)
     {
         $unix_timestamp = time();
     }
@@ -2333,20 +2333,20 @@ function auto_complete_cache()
     ## 자동완성 파일캐시갱신
     $cache_file = _TMPUSER.'complete';
     $cache_tmp  = _TMPUSER.'auto_complete';
-    $cache_fwrite = false;
+    $cache_fwrite = FALSE;
     if(!file_exists($cache_file)){
-        $cache_fwrite = true;
+        $cache_fwrite = TRUE;
     }else{
         $filetime = filemtime($cache_file);
         if($filetime && $filetime < (time() - 600)) {
             @unlink($cache_file);
-            $cache_fwrite = true;
+            $cache_fwrite = TRUE;
         }
     }
     if($cache_fwrite){
         $CI->load->library('user');
         $ac_array = $CI->user->auto_complete_user_input();
-        $cache_list = "<?php\n\$ac_array=".var_export($ac_array, true).'?'.'>';
+        $cache_list = "<?php\n\$ac_array=".var_export($ac_array, TRUE).'?'.'>';
         write_file($cache_tmp, $cache_list, 'w');
         if(file_exists($cache_tmp)){
             rename($cache_tmp, $cache_file);
@@ -2422,7 +2422,7 @@ function left_folder_cache()
             }
         }
         $folder_count['all_mail']['unread'] = $total_unread_count;
-        $folder_count['my'] = (isset($folder_count[0]) ? $folder_count[0] : null);
+        $folder_count['my'] = (isset($folder_count[0]) ? $folder_count[0] : NULL);
         $other = $CI->dbu_index->mail_folder_count(array(
             "select" => "count(a.mail_read) as mail_count, a.mail_read",
             "__not_folder_num" => 3,
@@ -2487,7 +2487,7 @@ function left_folder_cache()
             if(!isset($folder_count[$val])) $folder_count[$val]['unread'] = 0;
         }
 
-        $cache_list = "<?php\n\$folder_count=".var_export($folder_count, true).'?'.'>';
+        $cache_list = "<?php\n\$folder_count=".var_export($folder_count, TRUE).'?'.'>';
         write_file($left_cache_tmp, $cache_list, 'w');
         if (file_exists($left_cache_tmp))
             rename($left_cache_tmp, $left_cache_file);
@@ -2501,7 +2501,7 @@ function left_folder_cache()
         if($userpds === 'N')
             $userpds_auth = false;
 
-        setcookie('folder_count_time', $userindexdbs, vars('COOKIE_EXPIRE'), '/webmail', "", "", true);
+        setcookie('folder_count_time', $userindexdbs, vars('COOKIE_EXPIRE'), '/webmail', "", "", TRUE);
         if(_MOBILE !== 'mobile')
         {
             $CI->load->model('db_approval_mail');
@@ -2525,7 +2525,7 @@ function left_folder_cache()
             //left html cache
             write_file(_TMPUSER . 'mail_left_html', $_left, 'w');
 
-            return true;
+            return TRUE;
         }
     }
 }
@@ -2558,7 +2558,7 @@ if ( ! function_exists('get_elapsed'))
      *
      * @param   reminder    - 나머지 처리 (floor, ceil, round)
      */
-    function get_elapsed($after_time = false, $before_time = false, $unit = 'day', $reminder = 'floor')
+    function get_elapsed($after_time = FALSE, $before_time = FALSE, $unit = 'day', $reminder = 'floor')
     {
         $unit_range = array(
             'year' => 31536000,
@@ -2575,7 +2575,7 @@ if ( ! function_exists('get_elapsed'))
         // check require param
         if (( ! array_key_exists($unit, $unit_range)) || ( ! in_array($reminder, $reminder_range)) || ( ! $after_time) || ( ! $before_time) || ($after_time < $before_time))
         {
-            return false;
+            return FALSE;
         }
 
         $time_sub = $after_time - $before_time;
@@ -2702,7 +2702,7 @@ if ( ! function_exists('disconnected_user_refresh'))
                 $query_data = array(
                     'sosokname' => '__NOSOSOK__',
                 );
-                $nososok_info = (array) $CI->db_users->sosok_new_list($query_data, true);
+                $nososok_info = (array) $CI->db_users->sosok_new_list($query_data, TRUE);
                 $nososok_seq = $nososok_info[0]['seq'];
 
                 $disc_users = (array) $CI->db_users->disconnected_users();
@@ -2819,7 +2819,7 @@ if ( ! function_exists('newnode_similar_count'))
             case 'organ':
             {
                 $query_data = array();
-                $res = (array) $CI->db_users->sosok_new_list($query_data, true);
+                $res = (array) $CI->db_users->sosok_new_list($query_data, TRUE);
 
                 $similar_names = preg_grep('/^'.langs('new_node').'(\(\d+\))?$/', array_column($res, 'sosokname'));
                 $similar_count = count($similar_names);
@@ -2859,7 +2859,7 @@ if ( ! function_exists('newnode_similar_count'))
  */
 if ( ! function_exists('jstree_fix_root'))
 {
-    function jstree_fix_root($tree_type, $always_adjust = false)
+    function jstree_fix_root($tree_type, $always_adjust = FALSE)
     {
         $CI =& get_instance();
 
@@ -2938,13 +2938,13 @@ if ( ! function_exists('jstree_fix_root'))
 
                     //---------------- 루트노드 추가 끝 ----------------//
 
-                    if ($always_adjust === false)
+                    if ($always_adjust === FALSE)
                     {
                         jstree_adjust($tree_type);
                     }
                 }
 
-                if ($always_adjust === true)
+                if ($always_adjust === TRUE)
                 {
                     jstree_adjust($tree_type);
                 }
@@ -3016,13 +3016,13 @@ if ( ! function_exists('jstree_fix_root'))
 
                     //---------------- 루트노드 추가 끝 ----------------//
 
-                    if ($always_adjust === false)
+                    if ($always_adjust === FALSE)
                     {
                         jstree_adjust($tree_type);
                     }
                 }
 
-                if ($always_adjust === true)
+                if ($always_adjust === TRUE)
                 {
                     jstree_adjust($tree_type);
                 }
@@ -3034,7 +3034,7 @@ if ( ! function_exists('jstree_fix_root'))
                     'parentcode' => '0',
                     'sosokname__not' => '__NOSOSOK__',
                 );
-                $root_list = (array) $CI->db_users->sosok_new_list($query_data, true);
+                $root_list = (array) $CI->db_users->sosok_new_list($query_data, TRUE);
 
                 if (count($root_list) !== 1)
                 {
@@ -3109,13 +3109,13 @@ if ( ! function_exists('jstree_fix_root'))
 
                     //---------------- 루트노드 추가 끝 ----------------//
 
-                    if ($always_adjust === false)
+                    if ($always_adjust === FALSE)
                     {
                         jstree_adjust($tree_type);
                     }
                 }
 
-                if ($always_adjust === true)
+                if ($always_adjust === TRUE)
                 {
                     jstree_adjust($tree_type);
                 }
@@ -3213,13 +3213,13 @@ if ( ! function_exists('jstree_fix_root'))
 
                     //---------------- 루트노드 추가 끝 ----------------//
 
-                    if ($always_adjust === false)
+                    if ($always_adjust === FALSE)
                     {
                         jstree_adjust($tree_type);
                     }
                 }
 
-                if ($always_adjust === true)
+                if ($always_adjust === TRUE)
                 {
                     jstree_adjust($tree_type);
                 }
@@ -3278,7 +3278,7 @@ if ( ! function_exists('jstree_adjust'))
                     ),
                 );
                 $CI->load->library('tree', $tree_data, $lib_name);
-                $CI->{$lib_name}->adjust_tree(false);
+                $CI->{$lib_name}->adjust_tree(FALSE);
                 break;
             }
             case 'public_address':
@@ -3310,7 +3310,7 @@ if ( ! function_exists('jstree_adjust'))
                     ),
                 );
                 $CI->load->library('tree', $tree_data, $lib_name);
-                $CI->{$lib_name}->adjust_tree(false);
+                $CI->{$lib_name}->adjust_tree(FALSE);
                 break;
             }
             case 'organ':
@@ -3337,7 +3337,7 @@ if ( ! function_exists('jstree_adjust'))
                     ),
                 );
                 $CI->load->library('tree', $tree_data, $lib_name);
-                $CI->{$lib_name}->adjust_tree(false);
+                $CI->{$lib_name}->adjust_tree(FALSE);
 
                 $CI->load->model('ea_db');
                 $CI->ea_db->sosok_copy();
@@ -3369,7 +3369,7 @@ if ( ! function_exists('jstree_adjust'))
                     ),
                 );
                 $CI->load->library('tree', $tree_data, $lib_name);
-                $CI->{$lib_name}->adjust_tree(false);
+                $CI->{$lib_name}->adjust_tree(FALSE);
                 break;
             }
             default:
@@ -3385,7 +3385,7 @@ if ( ! function_exists('jstree_adjust'))
  */
 if ( ! function_exists('keyword_converter'))
 {
-    function keyword_converter($keyword = "", $type = "DEFAULT", $reverse = false)
+    function keyword_converter($keyword = "", $type = "DEFAULT", $reverse = FALSE)
     {
         $convert_keyword = $keyword;
 
@@ -3433,7 +3433,7 @@ if ( ! function_exists('keyword_converter'))
  */
 if ( ! function_exists('active_type_converter'))
 {
-    function active_type_converter($active_type, $type = "DEFAULT", $reverse = false)
+    function active_type_converter($active_type, $type = "DEFAULT", $reverse = FALSE)
     {
         $code2text = array(
             'D' => langs('deny'),
@@ -3494,9 +3494,9 @@ function puddlr_curl($cmd,$method, $data, $mode="")
 //      $exec_res = exec_helper($str);
 //      $output = $exec_res['output'];
 
-        $auth = json_decode( $output['0'], true);
+        $auth = json_decode( $output['0'], TRUE);
         if(file_exists(_MAILCONFIGPATH."DEBUG")){
-            write_file(_TMPDOMAIN."debug_".date('Ymd'), "\n\n".date('Y-m-d H:i:s')."\n".var_export($auth, true), 'a');
+            write_file(_TMPDOMAIN."debug_".date('Ymd'), "\n\n".date('Y-m-d H:i:s')."\n".var_export($auth, TRUE), 'a');
         }
         $puddlr_token = $auth['token'];
         $sess_data = array(
@@ -3633,7 +3633,7 @@ function puddlr_curl($cmd,$method, $data, $mode="")
     $output = $exec_res['output'];
 
     unset($result);
-    $result = json_decode( $output['0'], true);
+    $result = json_decode( $output['0'], TRUE);
 
     if($method_delete == "DELETE" && $result['user']['id']){
         unset($output);
@@ -3645,8 +3645,8 @@ function puddlr_curl($cmd,$method, $data, $mode="")
     }
 
     if(file_exists(_MAILCONFIGPATH."DEBUG")){
-        write_file(_TMPDOMAIN."debug_".date('Ymd'), "\n\n".date('Y-m-d H:i:s')."\n".var_export($str, true), 'a');
-        write_file(_TMPDOMAIN."debug_".date('Ymd'), "\n\n".date('Y-m-d H:i:s')."\n".var_export($result, true), 'a');
+        write_file(_TMPDOMAIN."debug_".date('Ymd'), "\n\n".date('Y-m-d H:i:s')."\n".var_export($str, TRUE), 'a');
+        write_file(_TMPDOMAIN."debug_".date('Ymd'), "\n\n".date('Y-m-d H:i:s')."\n".var_export($result, TRUE), 'a');
     }
 
     return $output['0'];
@@ -3779,7 +3779,7 @@ if ( ! function_exists('make_approval_filter'))
             }else if($v['af_type'] == 'K'){
                 $tmp_etc = array();
 
-                if(strpos($v['af_value'], 'all_') !== false){
+                if(strpos($v['af_value'], 'all_') !== FALSE){
 
                     if($v['af_value'] == 'all_office'){
                         $tmp_etc = array(
@@ -4007,7 +4007,7 @@ if ( ! function_exists('make_approval_filter'))
                         //$filter_list['exe'][] = 'alz';
                     }
 
-                }else if(strpos($v['af_value'], 'office_') !== false){
+                }else if(strpos($v['af_value'], 'office_') !== FALSE){
 
                     $type = str_replace('office_', '', $v['af_value']);
 
@@ -4277,11 +4277,11 @@ if ( ! function_exists('isBeforeTs'))
      */
     function isBeforeTs($ts, $diff="now")
     {
-        $res = false;
+        $res = FALSE;
 
         $diff_ts = cut_date(strtotime($diff), '7');
         if ($ts < $diff_ts) {
-            $res = true;
+            $res = TRUE;
         }
 
         return $res;
